@@ -13,6 +13,7 @@
 <script>
 import BoardItem from './BoardItem';
 import useGameInit from './composables/useGameInit';
+import useGameStart from './composables/useGameStart';
 
 export default {
   name: 'Board',
@@ -24,37 +25,17 @@ export default {
     const number = 25;
 
     const { difficult,fields,init } = useGameInit(number)
+
+    const {start} = useGameStart(init,fields,difficult,number)
     
 
     return {
       number,
       difficult,
       fields,
-      init
+      init,
+      start
     }
-  },
-  
-  methods: {
-    start() {
-      this.init();
-      this.prepareGame();
-    },
-    
-    prepareGame() {
-      for (let i = 0; i < this.difficult; i++) {
-        const index = this.rand(0, this.number - 1);
-        
-        if (this.fields[index].value !== 1) {
-          this.fields[index].value = 1;
-        } else {
-          i--;
-        }
-      }
-    },
-  
-    rand(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
-    },
   }
 }
 </script>

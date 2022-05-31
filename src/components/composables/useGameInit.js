@@ -1,4 +1,4 @@
-import { ref, onBeforeMount } from 'vue';
+import { onBeforeMount, ref } from "vue";
 
 export default function useGameInit(number) {
   let difficult = ref(3);
@@ -15,11 +15,12 @@ export default function useGameInit(number) {
       });
     }
   }
+
   onBeforeMount(init);
 
   return {
     difficult,
     fields,
-    init,
+    init
   }
 }
