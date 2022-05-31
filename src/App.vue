@@ -1,12 +1,17 @@
 <template>
-  <div class="app">
-    <img class="logo" alt="Vue logo" src="./assets/logo.png">
-    
-    <h1 class="h1">Remember Me, Vue 3</h1>
-    <p>Запомни и открой все зеленые клетки</p>
-    
-    <Board />
+<header class="hero">
+  <div class="header">
+    <div class="header__title">
+        <h1>Vue-Game</h1>
+    </div>
+    <div class="header__sub-title">
+        <p>Запомни и открой все зеленые клетки</p>
+    </div>
   </div>
+    <div class="main">
+        <Board/>
+    </div>
+</header>
 </template>
 
 <script>
@@ -21,12 +26,16 @@ export default {
 </script>
 
 <style scoped>
-  .app {
-    font-family: Helvetica, sans-serif;
-    text-align: center;
-    margin-top: 40px;
-  }
-  .logo {
-    width: 100px;
-  }
+.hero{
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  text-align: center;
+}
+header h1,p{
+  margin: 0;
+  padding: 0;
+}
+.header{
+  margin: 30px 0;
+}
 </style>

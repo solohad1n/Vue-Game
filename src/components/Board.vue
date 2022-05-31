@@ -6,13 +6,13 @@
     
     <p class="difficult">Сложность: <strong>{{ difficult }}</strong></p>
   
-    <button class="btn" @click="start">Старт</button>
+    <button @click="start">Старт</button>
   </div>
 </template>
 
 <script>
 import BoardItem from './BoardItem';
-import { ref, onBeforeMount } from 'vue';
+import useGameInit from './composables/useGameInit';
 
 export default {
   name: 'Board',
@@ -20,25 +20,12 @@ export default {
   components: {
     BoardItem,
   },
-  setup() {
-    let difficult = ref(3);
-    let fields = ref([]);
+  setup() {   
     const number = 25;
+
+    const { difficult,fields,init } = useGameInit(number)
     
-    const init = () => {
-      fields.value = [];
-      
-      for (let i = 0; i < number; i++) {
-        fields.value.push({
-          id: i,
-          clicked: false,
-          value: 0,
-        });
-      }
-    }
-    
-    onBeforeMount(init);
-    
+
     return {
       number,
       difficult,
@@ -83,18 +70,18 @@ export default {
     margin: 0 auto;
   }
   
-  .btn {
+button{
     background: #42b983cc;
     color: white;
-    border: none;
     border-radius: 2px;
-    padding: 10px 30px;
+    padding: 10px 50px;
     margin: 10px 0;
     cursor: pointer;
     outline: none;
-  }
-  
-  button:hover {
-    background: #42b983;
-  }
+    font-size: 20px;
+}
+button:hover{
+  background: #266e4ecc;
+  transition: background-color 0.5s, height 2s;
+}
 </style>

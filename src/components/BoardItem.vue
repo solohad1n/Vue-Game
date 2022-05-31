@@ -24,9 +24,9 @@ export default {
     margin: 5px;
     display: inline-block;
     cursor: pointer;
-    
     transition: .4s;
     transform-style: preserve-3d;
+    margin-bottom:0px ;
   }
   
   .item-active {
