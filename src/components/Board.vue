@@ -1,7 +1,7 @@
 <template>
   <div class="board-wrapper">
     <div class="board">
-      <BoardItem v-for="field in fields" :field="field" :key="'item-' + field.id" />
+      <BoardItem :preview="preview" v-for="field in fields" :field="field" :key="'item-' + field.id" />
     </div>
     
     <p class="difficult">Сложность: <strong>{{ difficult }}</strong></p>
@@ -26,7 +26,7 @@ export default {
 
     const { difficult,fields,init } = useGameInit(number)
 
-    const {start} = useGameStart(init,fields,difficult,number)
+    const {start,preview} = useGameStart(init,fields,difficult,number)
     
 
     return {
@@ -34,7 +34,8 @@ export default {
       difficult,
       fields,
       init,
-      start
+      start,
+      preview
     }
   }
 }
