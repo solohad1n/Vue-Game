@@ -1,7 +1,8 @@
 import { onBeforeMount, ref } from "vue";
+import { FIELD, DIFFICULT } from '@/constantas'
 
 export default function useGameInit(number) {
-  let difficult = ref(3);
+  let difficult = ref(DIFFICULT);
   let fields = ref([]);
 
   const init = () => {
@@ -11,7 +12,7 @@ export default function useGameInit(number) {
       fields.value.push({
         id: i,
         clicked: false,
-        value: 0,
+        value: FIELD.EMPTY,
       });
     }
   }

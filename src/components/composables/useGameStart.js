@@ -1,6 +1,7 @@
 import { ref } from 'vue';
+import { FIELD, GAME_STATUS } from '@/constantas'
 
-export default function useGameStart(init, fields, difficult, number) {
+export default function useGameStart(init, fields, difficult, number, gameStatus) {
   let preview = ref(false);
 
   const start = () => {
@@ -10,11 +11,12 @@ export default function useGameStart(init, fields, difficult, number) {
 
   const prepareGame = () => {
     preview.value = true;
+    gameStatus.value = GAME_STATUS.PREVIEW
 
     for (let i = 0; i < difficult.value; i++) {
       const index = rand(0, number - 1);
-      if (fields.value[index].value !== 1) {
-        fields.value[index].value = 1;
+      if (fields.value[index].value !== FIELD.FILLED) {
+        fields.value[index].value = FIELD.FILLED;
       } else {
         i--;
       }
@@ -22,6 +24,7 @@ export default function useGameStart(init, fields, difficult, number) {
 
     setTimeout(() => {
       preview.value = false;
+      gameStatus.value = GAME_STATUS.STARTED;
     }, 2000);
   };
 

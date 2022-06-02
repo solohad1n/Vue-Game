@@ -3,6 +3,8 @@
     <div class="board">
       <BoardItem :preview="preview" v-for="field in fields" :field="field" :key="'item-' + field.id" />
     </div>
+
+    {{gameStatus}}
     
     <p class="difficult">Сложность: <strong>{{ difficult }}</strong></p>
   
@@ -11,9 +13,11 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity';
 import BoardItem from './BoardItem';
 import useGameInit from './composables/useGameInit';
 import useGameStart from './composables/useGameStart';
+import { GAME_STATUS } from '@/constantas'
 
 export default {
   name: 'Board',
@@ -24,9 +28,12 @@ export default {
   setup() {   
     const number = 25;
 
+    const gameStatus = ref(GAME_STATUS.NONE)
+
+
     const { difficult,fields,init } = useGameInit(number)
 
-    const {start,preview} = useGameStart(init,fields,difficult,number)
+    const {start,preview} = useGameStart(init,fields,difficult,number,gameStatus)
     
 
     return {
@@ -35,7 +42,8 @@ export default {
       fields,
       init,
       start,
-      preview
+      preview,
+      gameStatus,
     }
   }
 }
