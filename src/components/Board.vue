@@ -1,51 +1,49 @@
 <template>
   <div class="board-wrapper">
     <div class="board">
-      <BoardItem :preview="preview" v-for="field in fields" :field="field" :key="'item-' + field.id" />
+      <BoardItem :game-status="gameStatus" v-for="field in fields" :field="field" :key="'item-' + field.id"
+        @selectField="selectField($event)"/>
     </div>
-
-    {{gameStatus}}
     
     <p class="difficult">Сложность: <strong>{{ difficult }}</strong></p>
   
-    <button @click="start">Старт</button>
+    <button class="btn" @click="start" :disabled="!canStartGame">Старт</button>
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity';
 import BoardItem from './BoardItem';
-import useGameInit from './composables/useGameInit';
-import useGameStart from './composables/useGameStart';
-import { GAME_STATUS } from '@/constantas'
-
+import useGameInit from "@/components/composables/useGameInit";
+import useGameStart from "@/components/composables/useGameStart";
+import useGameProcess from "@/components/composables/useGameProcess";
+import { GAME_STATUS } from "@/constants";
+import { ref } from 'vue';
 export default {
   name: 'Board',
   props: {},
   components: {
     BoardItem,
   },
-  setup() {   
+  setup() {
     const number = 25;
-
-    const gameStatus = ref(GAME_STATUS.NONE)
-
-
-    const { difficult,fields,init } = useGameInit(number)
-
-    const {start,preview} = useGameStart(init,fields,difficult,number,gameStatus)
+    const gameStatus = ref(GAME_STATUS.NONE);
     
-
+    const { difficult, fields, init } = useGameInit(number);
+    
+    const { start, canStartGame } = useGameStart(init, fields, difficult, number, gameStatus);
+    const { selectField } = useGameProcess(fields);
+    
     return {
       number,
       difficult,
       fields,
       init,
       start,
-      preview,
       gameStatus,
+      canStartGame,
+      selectField
     }
-  }
+  },
 }
 </script>
 
@@ -60,18 +58,22 @@ export default {
     margin: 0 auto;
   }
   
-button{
+  .btn {
     background: #42b983cc;
     color: white;
+    border: none;
     border-radius: 2px;
-    padding: 10px 50px;
+    padding: 10px 30px;
     margin: 10px 0;
     cursor: pointer;
     outline: none;
-    font-size: 20px;
-}
-button:hover{
-  background: #266e4ecc;
-  transition: background-color 0.5s, height 2s;
-}
+  }
+  
+  button:hover {
+    background: #42b983;
+  }
+  
+  button:disabled {
+    opacity: .5;
+  }
 </style>

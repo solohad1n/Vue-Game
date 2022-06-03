@@ -1,8 +1,10 @@
 <template>
-  <span :class="'item ' + ((field.value === 1 && preview) ? 'item-active' : '')"></span>
+  <span :class="getBoardItemClasses" @click="select(field.id)"></span>
 </template>
 
 <script>
+import { GAME_STATUS, FIELD } from "@/constants";
+import { computed } from 'vue';
 export default {
   name: 'BoardItem',
   props: {
@@ -10,12 +12,35 @@ export default {
       type: Object,
       required: true,
     },
-    preview: {
-      type: Boolean,
+    gameStatus: {
+      type: Number,
       required: false,
-      default: false,
+      default: GAME_STATUS.NONE,
     }
   },
+  setup(props) {
+    const getBoardItemClasses = computed(() => {
+      let classes = 'item ';
+      
+      if (props.field.value === FIELD.FILLED && props.gameStatus === GAME_STATUS.PREVIEW
+        || props.field.clicked) {
+        classes += 'active';
+      }
+      
+      return classes;
+    });
+    
+    return {
+      getBoardItemClasses
+    }
+  },
+  methods: {
+    select(id) {
+      if (this.gameStatus === GAME_STATUS.STARTED) {
+        this.$emit('selectField', id);
+      }
+    }
+  }
 }
 </script>
 
@@ -28,12 +53,12 @@ export default {
     margin: 5px;
     display: inline-block;
     cursor: pointer;
+    
     transition: .4s;
     transform-style: preserve-3d;
-    margin-bottom:0px ;
   }
   
-  .item-active {
+  .item.active {
     background: #42b983cc;
     transform: rotateX(180deg);
   }

@@ -1,5 +1,5 @@
 import { onBeforeMount, ref } from "vue";
-import { FIELD, DIFFICULT } from '@/constantas'
+import { FIELD, DIFFICULT } from "@/constants";
 
 export default function useGameInit(number) {
   let difficult = ref(DIFFICULT);
