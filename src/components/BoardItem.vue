@@ -23,8 +23,12 @@ export default {
       let classes = 'item ';
       
       if (props.field.value === FIELD.FILLED && props.gameStatus === GAME_STATUS.PREVIEW
-        || props.field.clicked) {
-        classes += 'active';
+        || props.field.clicked && props.field.value === FIELD.FILLED) {
+        classes += ' active';
+      }
+      
+      if (props.field.clicked && props.field.value === FIELD.EMPTY) {
+        classes += ' error';
       }
       
       return classes;
@@ -53,13 +57,18 @@ export default {
     margin: 5px;
     display: inline-block;
     cursor: pointer;
-    
     transition: .4s;
     transform-style: preserve-3d;
+    margin-bottom: 0;
   }
   
   .item.active {
     background: #42b983cc;
+    transform: rotateX(180deg);
+  }
+  
+  .item.error {
+    background-color: #ff000055;
     transform: rotateX(180deg);
   }
 </style>

@@ -1,8 +1,8 @@
-import { onBeforeMount, ref } from "vue";
-import { FIELD, DIFFICULT } from "@/constants";
+import { onBeforeMount, ref, watch } from "vue";
+import { FIELD, DEFAULT_DIFFICULT, MAX_DIFFICULT } from "@/constants";
 
 export default function useGameInit(number) {
-  let difficult = ref(DIFFICULT);
+  let difficult = ref(DEFAULT_DIFFICULT);
   let fields = ref([]);
 
   const init = () => {
@@ -16,6 +16,12 @@ export default function useGameInit(number) {
       });
     }
   }
+
+  watch(difficult, (newDifficult) => {
+    if (newDifficult > MAX_DIFFICULT) {
+      difficult.value = MAX_DIFFICULT;
+    }
+  });
 
   onBeforeMount(init);
 
